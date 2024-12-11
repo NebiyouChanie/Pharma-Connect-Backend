@@ -10,9 +10,10 @@ exports.addMedicineController= async(req,res)=>{
             success: true,
             message:"medicine created successfully!",
            
+           
         })
     } catch (error) {
-        console.log("file: PharmacistController.js:5 ~ exports.Usercontroller= ~ error:", error.message)
+        console.log("file: PharmacistController.js:5 ~ exports.addMedicineController ~ error:", error.message);
         res.status(500).json({
             success:false,
             message:"Something went wrong!",
