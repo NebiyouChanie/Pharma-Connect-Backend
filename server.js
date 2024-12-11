@@ -16,6 +16,11 @@ connectDB()
 // user routes
 app.use('/api/v1/users', require('./routes/UserRoutes'))
 
+
+//pharmacist routes
+
+app.use("/api/v1/pharmacist",require("./routes/PharmacistRoutes"))
+
 // Testing
 app.get('/', (req, res) => {
     res.send("hello world")
