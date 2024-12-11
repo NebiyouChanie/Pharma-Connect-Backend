@@ -33,11 +33,11 @@ const MedicineSchema= new mongoose.Schema({
         type: Date,
         required: [true, 'Expiry date is required'],
     },
-    addedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Links to the pharmacist who added the medicine
-        required: true,
-    },
+    // addedBy: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User', // Links to the pharmacist who added the medicine
+    //     required: true,
+    // },
     
 })
 const Medicine = mongoose.model('Medicine', MedicineSchema)

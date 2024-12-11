@@ -26,8 +26,9 @@ app.get('/', (req, res) => {
     res.send("hello world")
 })
 
+//testing port
+const port=5000
 
-
-app.listen(process.env.PORT, () => {
+app.listen(port, () => {
     console.log("Server is listesning on port:", process.env.PORT)
 })

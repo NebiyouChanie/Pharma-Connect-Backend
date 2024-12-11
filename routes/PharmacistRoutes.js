@@ -1,16 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const PharmacyController=require("../controller/PharmacistController") 
+const PharmacistController=require("../controller/PharmacistController") 
+
+
+
+// medicine management
+router.post('/Medicine/add',PharmacistController.addMedicineController);
+
+router.post('/Medicine/edit',PharmacistController.editMedicineDetailController);
+
+router.delete("/Medicine/:medicineId/delete",PharmacistController.deleteMedicineController);
 
 
 
 
-router.post('/Medicine/add',PharmacyController.addMedicineController);
+// //profile management
+// router.get("/profile",PharmacistController.getProfileController);
+// router.put('/profile/update', PharmacistController.updateProfileController); 
+// router.put('/profile/changePassword', PharmacistController.changePasswordController); 
+
+// //stock-related routes
+
+// router.get('/Medcine/list', PharmacistController.getAllMedicinesController);
+// router.get('/Medicine/lowStock',PharmacistController.getLowStockMedicinesController);// Fetch medicines with low stock
 
 
-router.post('/Medicine/editDetails',PharmacyController.editMedicineDetailController);
-
-router.delete("/Medicine/delete",PharmacyController.deleteMedicineController)
 
 
 module.exports = router
