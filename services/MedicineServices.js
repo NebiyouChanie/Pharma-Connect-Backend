@@ -43,6 +43,8 @@ exports.editMedicine=async (medicineId,updatedData)=>{
 
 }
 
+//delete medicine
+
 exports.deleteMedicine= async(medicineId)=>{
     const deletedMedicine=await Medicine.findByIdAndDelete(medicineId);
     if(!deletedMedicine){
@@ -51,3 +53,14 @@ exports.deleteMedicine= async(medicineId)=>{
 return deletedMedicine;
 }
 
+
+
+
+// List medicines
+exports.listMedicine = async () => {
+    const medicines = await Medicine.find(); // Fetch all medicines from the database
+    if (medicines.length === 0) {
+        throw new Error("No medicines found");
+    }
+    return medicines;
+};

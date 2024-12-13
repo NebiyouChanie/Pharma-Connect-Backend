@@ -54,11 +54,29 @@ exports.deleteMedicineController=async (req,res)=>{
         const {medicineId}=req.params;
         const deletedMedicine=await MedicineServices.deleteMedicine(medicineId);
         res.status(200).json({
-            success:true,
+             success:true,
             message:"Medicine deleted succesfully",
             data:deletedMedicine,
         })
     }catch(error){
+       res.status(400).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+
+//list medicine controller
+
+exports.listMedicineController=async(req,res)=>{
+    try{
+        const listOfMedicines= await MedicineServices.listMedicine();
+        res.status(200).json({
+            success:true,
+            message:"All Medicines are listed succesfully",
+            data:listOfMedicines,
+        })
+    } catch(error){
         res.status(400).json({
             success:false,
             message:error.message

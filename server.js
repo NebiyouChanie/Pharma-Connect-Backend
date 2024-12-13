@@ -17,9 +17,9 @@ connectDB()
 app.use('/api/v1/users', require('./routes/UserRoutes'))
 
 
-//pharmacist routes
+//medicine routes
 
-app.use("/api/v1/pharmacist",require("./routes/PharmacistRoutes"))
+app.use("/api/v1/medicines",require("./routes/MedicineRoutes"))
 
 // Testing
 app.get('/', (req, res) => {
