@@ -6,6 +6,7 @@ const CustomError = require("../utils/customError");
 
 // Get pharmacy by ID
 exports.getPharmacyById = async (id) => {
+  console.log("🚀 ~ file: pharamcyServices.js:9 ~ exports.getPharmacyById= ~ id:", id)
   const pharmacy = await Pharmacy.findById(id);
   
   if (!pharmacy) {
@@ -51,6 +52,7 @@ exports.getPharmacies = async (filter = {}) => {
  
 // get inventory of a pharmacy 
 exports.getInventory =  async (pharmacyId) => {
+console.log("🚀 ~ file: pharamcyServices.js:55 ~ exports.getInventory= ~ pharmacyId:", pharmacyId)
 
   const pharmacy = await Pharmacy.findById(pharmacyId);
    

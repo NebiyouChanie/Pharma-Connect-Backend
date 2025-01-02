@@ -30,12 +30,11 @@ const UserSchema = new mongoose.Schema({
     },
     phoneNumber :{ 
         type: String, 
-        // required: [true, 'Phone number is required'],
         match: [/^\+?[1-9]\d{1,14}$/, 'Please enter a valid phone number.']
     },
     role :{ 
         type: String, 
-        enum: ['user', 'admin','pharmacy'], 
+        enum: ['user', 'admin','pharmacist'], 
         default: 'user' 
     },
     createdAt :{ 

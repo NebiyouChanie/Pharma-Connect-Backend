@@ -1,6 +1,7 @@
 const Medicine = require("../models/MedicineModel");
 const Pharmacy = require("../models/pharmacyModel");
 const Inventory = require("../models/inventoryModel");
+const customError = require('../utils/customError');
 
 exports.searchMedicine = async ({
   medicineName,
@@ -18,7 +19,7 @@ exports.searchMedicine = async ({
   console.log("🚀 ~ file: searchServices.js:17 ~ medicine:", medicine)
 
   if (!medicine) {
-    throw new Error("Medicine not found");
+    throw new customError('Medicine not found.', 400);
   }
 
   // Query inventory for pharmacies that stock the medicine

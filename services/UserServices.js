@@ -30,6 +30,7 @@ exports.signIn = async (userData) => {
     const { email, password } = userData;
 
     const existingUser = await User.findOne({ email }); 
+
     if (!existingUser) {
         throw new CustomError("Email does not exist.",400);
     }
@@ -49,7 +50,9 @@ exports.signIn = async (userData) => {
         { expiresIn: process.env.JWT_SECRET_EXPIRES }
     );
 
-    return token;
+    const role = existingUser.role
+
+    return {token, role};
 };
 
 

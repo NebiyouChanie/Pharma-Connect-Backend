@@ -33,14 +33,15 @@ exports.signUpController = asyncErrorHandler(async ( req, res )=> {
 // })
 
 exports.signInController = asyncErrorHandler(async (req, res) => {
-    const token = await UserServices.signIn(req.body);
+    const response = await UserServices.signIn(req.body);
 
     // Set the token in a cookie
-    res.cookie("authToken", token, {
+    res.cookie("authToken", response.token, {
         httpOnly: true, // Prevent JavaScript from accessing the cookie
        
     }).status(200).json({
         success: true,
+        role: response.role,
         message: "User logged in successfully!",
     });
 });

@@ -5,8 +5,9 @@ const asyncErrorHandler = require('../utils/asyncErrorHandler')
 
 // get pharmacy
 exports.getPharmacyController = asyncErrorHandler( async(req, res) => {
-    const pharmacyId = req.params.pharmacyId;
-    const pharmacy = await pharmacyService.getPharmacyById(pharmacyId);
+  console.log(req.params)
+    const pharmacyId = req.params.id;
+     const pharmacy = await pharmacyService.getPharmacyById(pharmacyId);
     res.status(200).json({
       success: true,
       data: pharmacy,
@@ -56,7 +57,7 @@ exports.getPharmaciesController = asyncErrorHandler( async (req, res) => {
 
 // get inventory of a pharmacy 
 exports.getInventory = asyncErrorHandler(async (req, res) => {
-  const {pharmacyId} = req.params;
+  const pharmacyId = req.params.pharmacyId;
   const inventory = await pharmacyService.getInventory(pharmacyId);
   res.status(200).json({
     success: true,
