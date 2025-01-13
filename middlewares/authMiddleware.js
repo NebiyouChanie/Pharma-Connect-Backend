@@ -1,19 +1,20 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel')
-
+const customError = require('../utils/customError')
 
 exports.authMiddleware = async ( req, res, next ) => {
     // 1. Check if authorization header exists
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer')) {
-        return next(new Error("You are not logged in."));
+        return next(new customError("You are not logged in.",401));
     }
 
     const token = authHeader.split(' ')[1];
+    console.log("🚀 ~ file: authMiddleware.js:14 ~ exports.authMiddleware= ~ token:", token)
 
     if (!token) {
-        return next(new Error("You are not logged in."));
+        return next(new customError("You are not logged in.",401));
     }
 
     const decodedToken = jwt.verify(token,process.env.JWT_SECRET)

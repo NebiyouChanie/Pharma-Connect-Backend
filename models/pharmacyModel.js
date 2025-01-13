@@ -42,7 +42,11 @@ const PharmacySchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-
+  ownerId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User',  
+    required: true,
+  },
   latitude: {
     type: Number,
     required: true,
@@ -57,6 +61,11 @@ const PharmacySchema = new mongoose.Schema({
     trim: true,
   },
   licenseImage: {
+    type: String,
+    required: [true, "License image should be provided"],
+    trim: true,
+  },
+  pharmacyImage: {
     type: String,
     required: [true, "License image should be provided"],
     trim: true,

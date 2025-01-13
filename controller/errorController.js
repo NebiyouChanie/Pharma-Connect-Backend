@@ -28,6 +28,16 @@ const validationErrorHandler = (error) => {
     return new CustomError(messages, 400);
 };
 
+//Jwt expired error
+const expiredJWTHandler= (error) =>{
+    return new customError( "JWT has expired. please login again", 401)
+} 
+
+// invalid token/seginture
+const JWTErrorHandler= (error) =>{
+    return new customError( "Invalid token.", 401)
+}  
+
 // Handle Production Errors
 const prodErrors = (res, error) => {
     if (error.isOperational) {

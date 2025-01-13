@@ -49,6 +49,11 @@ const ApplicationSchema = new mongoose.Schema({
     ref: "Pharmacy",
     default: null, // Initially null, populated after approval
   },
+  ownerId: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'User',  
+      required: true,
+    },
   status: {
     type: String,
     enum: ["Pending", "Approved", "Suspended", "Closed"],

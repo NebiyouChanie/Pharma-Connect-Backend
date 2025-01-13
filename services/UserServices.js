@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require('../utils/emailService')
 const crypto = require('crypto')
 const CustomError = require('../utils/customError')
+const Inventory = require('../models/inventoryModel')
+const mongoose = require("mongoose");
  
 
 //signup
@@ -51,8 +53,10 @@ exports.signIn = async (userData) => {
     );
 
     const role = existingUser.role
+    const pharmacyId = existingUser.pharmacyId
+    const userId = existingUser._id
 
-    return {token, role};
+    return {token, role, pharmacyId,userId};
 };
 
 
@@ -179,3 +183,114 @@ exports.deleteAccount = async (userData) => {
     return
 };
 
+exports.getMyMedicines = async (userData) => {
+    const user = await User.findById(userData.userid);
+
+    if (!user) {
+        throw new CustomError('User not found!', 400);
+    }
+
+    // Fetch inventory items, then format the cart data
+    const inventoryItems = await Inventory.find({ '_id': { $in: user.cart } }) // Find only the items in the user's cart
+    .populate("pharmacy")
+    .populate("medicine");
+    
+    // Format the cart items
+    const formatedCart = await Promise.all(inventoryItems.map(async (item) => {
+
+        return {
+            pharmacyName: item.pharmacy.name,
+            inventoryId: item._id.toString(),
+            address: item.pharmacy.address,
+            photo: item.medicine.image,
+            price: item.price,
+            quantity: item.quantity,
+            latitude: item.pharmacy.latitude,
+            longitude: item.pharmacy.longitude,
+            pharmacyId: item.pharmacy._id,
+            medicineId: item.medicine._id,
+            medicineName: item.medicine.name,
+        };
+    }));
+
+    return formatedCart;
+};
+
+
+
+// add to my medicine   
+
+exports.addToCart = async (userData, inventoryIdObject) => {
+    // Extract the inventoryId from the object
+    const inventoryId = inventoryIdObject.inventoryId;
+  
+    // Validate that the inventoryId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(inventoryId)) {
+      throw new CustomError('Invalid inventory ID!', 400);
+    }
+  
+    const inventory = await Inventory.findById(inventoryId);
+  
+    if (!inventory) {
+      throw new CustomError('Inventory item not found!', 400);
+    }
+  
+    const user = await User.findById(userData.userid);
+  
+    if (!user) {
+      throw new CustomError('User not found!', 400);
+    }
+  
+    // Check if the inventory item is already in the cart
+    if (!user.cart.includes(inventoryId)) {
+      user.cart.push(inventoryId);
+      await user.save();
+    }
+  
+    return user;
+  };
+
+
+
+
+
+// Delete a single medicine
+exports.deleteSingleMyMedicines = async (userData, pharmacyId, medicineId) => {
+    const user = await User.findById(userData.userid);
+    
+    if (!user) {
+      throw new CustomError('User not found!', 400);
+    }
+  
+    const cart = user.cart; // Assuming `user.cart` is an array of inventory IDs.
+  
+    // Iterate and check each item in the cart
+    for (let i = 0; i < cart.length; i++) {
+      const inventory = await Inventory.findById(cart[i]);
+  
+      if (inventory && inventory.pharmacy.toString() === pharmacyId && inventory.medicine.toString() === medicineId) {
+        cart.splice(i, 1); // Remove the matched inventory
+        break; // Stop after deleting the first matching item
+      }
+    }
+  
+    user.cart = cart; // Update the user's cart
+    await user.save();
+  
+    return user;
+  };
+  
+  // Delete all medicines
+  exports.deleteAllMyMedicines = async (userData) => {
+    const user = await User.findById(userData.userid);
+  
+    if (!user) {
+      throw new CustomError('User not found!', 400);
+    }
+  
+    user.cart = []; // Clear the cart
+    await user.save();
+  
+    return user;
+  };
+  

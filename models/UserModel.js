@@ -37,6 +37,17 @@ const UserSchema = new mongoose.Schema({
         enum: ['user', 'admin','pharmacist'], 
         default: 'user' 
     },
+    pharmacyId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Pharmacy',  
+        required: function() { return this.role === 'pharmacist'; }, // Required if the role is 'pharmacist'
+    },
+    cart: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Inventory',
+        },
+      ],
     createdAt :{ 
         type: Date, 
         default :  Date.now

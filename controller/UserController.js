@@ -20,31 +20,37 @@ exports.signUpController = asyncErrorHandler(async ( req, res )=> {
 
 // // Sign In Controller
 
-// exports.signInController = asyncErrorHandler (async ( req, res )=> {
-//         const token = await UserServices.signIn(req.body)
-//         res.set('Authorization', `Bearer ${token}`);
-//         res.status(200).json({
-//             success: true,
-//             message:"User logged-in successfully!",
-//             data: {
-//                 token:  token
-//             }
-//         })
-// })
+exports.signInController = asyncErrorHandler (async ( req, res )=> {
+        const response = await UserServices.signIn(req.body)
+        res.set('Authorization', `Bearer ${response.token}`);
+        res.status(200).json({
+            success: true,
+            message:"User logged-in successfully!",
+            data: {
+                role: response.role,
+                pharmacyId: response.pharmacyId,
+                userId: response.userId,
+            }
+        })
+})
 
-exports.signInController = asyncErrorHandler(async (req, res) => {
-    const response = await UserServices.signIn(req.body);
-
-    // Set the token in a cookie
-    res.cookie("authToken", response.token, {
-        httpOnly: true, // Prevent JavaScript from accessing the cookie
-       
-    }).status(200).json({
-        success: true,
-        role: response.role,
-        message: "User logged in successfully!",
-    });
-});
+// exports.signInController = asyncErrorHandler(async (req, res) => {
+//     const response = await UserServices.signIn(req.body);
+//     res.cookie("authToken", response.token, {
+//         httpOnly: true,       // Prevent JavaScript access
+//         secure: false,        // Set to true if using HTTPS
+//         sameSite: "None",     // Required for cross-origin cookies
+//     });
+//     // Set the token in a cookie
+//     res.cookie("authToken", response.token, {
+//         httpOnly: true, // Prevent JavaScript from accessing the cookie
+//     }).status(200).json({
+//         success: true,
+//         role: response.role,
+//         pharmacyId: response.pharmacyId,
+//         userId: response.userId,
+//     });
+// });
 
 
 
@@ -98,6 +104,53 @@ exports.deleteAcountController =asyncErrorHandler (async ( req, res )=> {
         res.status(200).json({
             success: true,
             message:"Account deleted successfully!",
+        })
+})
+
+
+
+
+// add to cart controller
+
+exports.addtoCartController =asyncErrorHandler (async ( req, res )=> {
+        const inventoryId = req.body
+        console.log("🚀 ~ file: UserController.js:123 ~ exports.addtoCartController=asyncErrorHandler ~ invenotryId:", inventoryId)
+        await UserServices.addToCart(req.user, inventoryId)
+        res.status(201).json({
+            success: true,
+            message:"Medicine added to My Medicines successfully!",
+        })
+})
+
+
+// get my medicnes controller
+
+exports.getMyMedicinesController =asyncErrorHandler (async ( req, res )=> {
+        const myMedicines= await UserServices.getMyMedicines(req.user)
+        res.status(201).json({
+            success: true,
+            data: myMedicines
+        })
+})
+
+
+
+// delete a single my medicnes controller
+exports.deleteSinlgeMyMedicinesController =asyncErrorHandler (async ( req, res )=> {
+        const {pharmacyId, medicineId} = req.body
+        const myMedicines= await UserServices.deleteSingleMyMedicines(req.user,pharmacyId, medicineId)
+        res.status(204).json({
+            success: true,
+            data: myMedicines
+        })
+})
+
+// delete a all my medicnes controller
+exports.deleteAllMyMedicinesController =asyncErrorHandler (async ( req, res )=> {
+        const myMedicines= await UserServices.deleteAllMyMedicines(req.user)
+        res.status(204).json({
+            success: true,
+            data: myMedicines
         })
 })
 

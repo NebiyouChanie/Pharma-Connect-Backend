@@ -6,20 +6,21 @@ const connectDB = require('./config/db')
 const CustomError = require('./utils/customError')
 const globalErrorHandler = require('./controller/errorController')
 const app = express()
- 
+const cookieParser = require("cookie-parser");
 
 // Middlewares
 app.use(cors(
     {
         origin: 'http://localhost:5173', 
         credentials:true,
+        exposedHeaders: ["Authorization"], 
     }
 ));
-app.use(express.json());
 
+app.use(cookieParser());
+app.use(express.json());
 //DB Connect
 connectDB();
-
 
 /*Routes*/
 

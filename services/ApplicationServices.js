@@ -1,18 +1,39 @@
 const Application = require("../models/applicationModel");
 const Pharmacy = require("../models/pharmacyModel");
+const User = require("../models/userModel");
 const CustomError = require('../utils/customError')
 
 
 // create application
 exports.createApplication = async(applicationData) => {
 
-  //license number??
+const owner = await User.findById(applicationData.ownerId)
+
+    if(!owner){
+      throw new CustomError("User doesn't exist. Please Login first.", 404);
+    }
+
+  //check application data
   const existingApplication = await Application.findOne({
-    address: applicationData.address,  
+    latitude: applicationData.latitude,  
+    longitude: applicationData.longitude,  
+    licenseNumber: applicationData.licenseNumber,  
+    email: applicationData.email,  
   })
 
   if (existingApplication) {
-    throw new CustomError("An application with this pharmacy address alread exist.", 400)
+    throw new CustomError("An application with this pharmacy address or email alread exist.", 404)
+  }
+  
+  const existingPharmacy = await Pharmacy.findOne({
+    latitude: applicationData.latitude,  
+    longitude: applicationData.longitude,  
+    licenseNumber: applicationData.licenseNumber,  
+    email: applicationData.email,  
+  })
+
+  if (existingPharmacy) {
+    throw new CustomError("A pharmacy with this pharmacy address or email alread exist.", 404)
   }
 
   const application = new Application(applicationData);
@@ -83,13 +104,24 @@ exports.updateApplicationStatus = async(applicationId, data) => {
     longitude: application.longitude,
     licenseNumber: application.licenseNumber,
     licenseImage: application.licenseImage,
+    pharmacyImage: application.pharmacyImage,
+    ownerId: application.ownerId,
   })
 
+  const owner = await User.findById(application.ownerId)
+
+  if(!owner){
+    throw new CustomError("User doesn't exist.", 404);
+  }
+
   application.pharmacyId = pharmacy._id;
+  owner.pharmacyId = pharmacy._id;
+  owner.role = "pharmacist";
   application.status = "Approved";
   await application.save()
+  await owner.save()
   await pharmacy.save()
-
+  console.log(owner, pharmacy)
   return {application, pharmacy};
 }
 

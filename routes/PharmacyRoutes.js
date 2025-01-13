@@ -21,6 +21,12 @@ router.delete("/:id", pharmacyController.deletePharmacyController);
 // get all pharmacies ( )
 router.get("/", pharmacyController.getPharmaciesController);
 
+// get  pharmacists ( )
+router.get("/:id/pharmacists", pharmacyController.getPharmacistsController);
+
+// remove  pharmacists ( )
+router.patch("/:id/pharmacists/:pharmacistId", pharmacyController.removePharmacistController);
+
 
 /**manage inventory routes */
 
@@ -30,11 +36,15 @@ router.post('/:pharmacyId/inventory', pharmacyController.addInventoryItem);
 // get inventory of a pharmacy/list of medicines&quantiies+price (phramacist & pharmacy profile)
 router.get('/:pharmacyId/inventory', pharmacyController.getInventory);
 
+// get s single invnentory of pharmacy (single medicine)
+router.get('/:pharmacyId/inventory/:inventoryId', pharmacyController.getInventoryItemController);
+
 // update quantity,price & expiredate
-router.patch('/:pharmacyId/inventory/:medicineId', pharmacyController.updateInventoryItem);
+router.patch('/:pharmacyId/inventory/:inventoryId', pharmacyController.updateInventoryItem);
+
 
 // delete medicine from inventory
-router.delete('/:pharmacyId/inventory/:medicineId', pharmacyController.deleteInventoryItem);
+router.delete('/:pharmacyId/inventory/:inventoryId', pharmacyController.deleteInventoryItem);
 
 // // Submit application
 // router.post('/pharmacies', pharmacyController.submitApplication);
