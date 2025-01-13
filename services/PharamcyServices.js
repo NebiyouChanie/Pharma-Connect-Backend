@@ -2,7 +2,7 @@ const Pharmacy = require("../models/pharmacyModel");
 const Inventory = require("../models/inventoryModel")
 const Medicine = require("../models/MedicineModel")
 const CustomError = require("../utils/customError");
-const User = require("../models/userModel");
+const User = require("../models/UserModel");
 
 
 // Get pharmacy by ID

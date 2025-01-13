@@ -1,6 +1,6 @@
 const Application = require("../models/applicationModel");
 const Pharmacy = require("../models/pharmacyModel");
-const User = require("../models/userModel");
+const User = require("../models/UserModel");
 const CustomError = require('../utils/customError')
 
 

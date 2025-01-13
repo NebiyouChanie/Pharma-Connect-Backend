@@ -7,7 +7,6 @@ const CustomError = require('./utils/customError')
 const globalErrorHandler = require('./controller/errorController')
 const app = express()
 const cookieParser = require("cookie-parser");
-// import gh from "./routes/PharmacyRoutes/";
 
 // Middlewares
 app.use(cors(
