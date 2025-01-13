@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const pharmacyController = require("../controller/PharmacyController");
-const pharmacyValidationSchema = require('../validation/pharmacyValidation')
-const validateRequest = require('../middlewares/validateRequest')
+// const validateRequest = require('../middlewares/validateRequest')
 
 /**pharmacy routes */
 

@@ -1,4 +1,4 @@
-const UserServices = require('../services/userServices')
+const UserServices = require('../services/UserServices')
 const asyncErrorHandler = require('../utils/asyncErrorHandler')
 
 

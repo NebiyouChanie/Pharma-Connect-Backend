@@ -7,6 +7,7 @@ const CustomError = require('./utils/customError')
 const globalErrorHandler = require('./controller/errorController')
 const app = express()
 const cookieParser = require("cookie-parser");
+// import gh from "./routes/PharmacyRoutes/";
 
 // Middlewares
 app.use(cors(
@@ -28,13 +29,15 @@ connectDB();
 app.use("/api/v1/users", require("./routes/UserRoutes"));
 
 //pharmacy routes
-app.use("/api/v1/pharmacies", require("./routes/pharmacyRoutes"));
+app.use("/api/v1/pharmacies", require("./routes/PharmacyRoutes/"));
+
+
 
 //medicine routes
 app.use("/api/v1/medicines", require("./routes/MedicineRoutes"));
 
 //application routes
-app.use("/api/v1/applications", require("./routes/applicationRoutes"));
+app.use("/api/v1/applications", require("./routes/ApplicationRoutes"));
 
 //search routes
 app.use("/api/v1/", require("./routes/searchRoutes"));

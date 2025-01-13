@@ -7,7 +7,6 @@ const User = require("../models/userModel");
 
 // Get pharmacy by ID
 exports.getPharmacyById = async (id) => {
-  console.log("🚀 ~ file: pharamcyServices.js:10 ~ exports.getPharmacyById= ~ id:", id)
   const pharmacy = await Pharmacy.findById(id);
   
   if (!pharmacy) {

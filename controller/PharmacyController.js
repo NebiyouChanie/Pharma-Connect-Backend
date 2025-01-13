@@ -1,4 +1,4 @@
-const pharmacyService = require("../services/pharamcyServices");
+const pharmacyService = require("../services/PharamcyServices");
 const asyncErrorHandler = require('../utils/asyncErrorHandler')
 
  

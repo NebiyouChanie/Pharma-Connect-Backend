@@ -1,4 +1,4 @@
-const ApplicationService = require("../services/applicationServices");
+const ApplicationService = require("../services/ApplicationServices");
 const asyncErrorHandler = require('../utils/asyncErrorHandler')
 
 
