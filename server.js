@@ -25,7 +25,7 @@ connectDB();
 /*Routes*/
 
 // user routes
-app.use("/api/v1/users", require("./routes/userRoutes"));
+app.use("/api/v1/users", require("./routes/UserRoutes"));
 
 //pharmacy routes
 app.use("/api/v1/pharmacies", require("./routes/pharmacyRoutes"));
