@@ -121,7 +121,7 @@ exports.addInventoryItem =  async (pharmacyId,medicineData) => {
     throw new CustomError(`A pharmacy with id: ${pharmacyId} doesn't exist.`, 404);
   }
   
-  const medicine = await Inventory.findOne({medicine: medicineData.medicineId, pharmacy:pharmacy});
+  const medicine = await Inventory.findOne({medicine: medicineData.medicineId, pharmacy:pharmacyId});
 
   if (medicine) {
     throw new CustomError(`medicine already exist in the inventory.`, 404);
