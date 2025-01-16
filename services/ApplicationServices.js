@@ -116,7 +116,7 @@ exports.updateApplicationStatus = async(applicationId, data) => {
 
   application.pharmacyId = pharmacy._id;
   owner.pharmacyId = pharmacy._id;
-  owner.role = "pharmacist";
+  owner.role = "owner";
   application.status = "Approved";
   await application.save()
   await owner.save()
