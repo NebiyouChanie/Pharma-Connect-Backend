@@ -22,7 +22,7 @@ exports.searchMedicine = async ({
   const result = inventoryItems.map((item) => ({
     pharmacyName: item.pharmacy.name,
     address: item.pharmacy.address,
-    photo: item.pharmacy.photo,
+    photo: item.pharmacy.pharmacyImage,
     price: item.price,
     quantity: item.quantity,
     latitude: item.pharmacy.latitude,
