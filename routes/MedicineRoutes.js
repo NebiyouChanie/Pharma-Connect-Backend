@@ -18,6 +18,9 @@ router.delete("/:medicineId",MedicineController.deleteMedicineController);
 //list medicine route
 router.get('/', MedicineController.listMedicinesController);
 
+//get medicine suggestions route (must come before :medicineId route)
+router.get('/suggestions', MedicineController.getMedicineSuggestionsController);
+
 //get medicine route
 router.get('/:medicineId', MedicineController.getMedicineController);
 

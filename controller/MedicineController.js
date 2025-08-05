@@ -58,3 +58,27 @@ exports.getMedicineController = asyncErrorHandler(async (req, res) => {
         data: medicine,
     });
 });
+
+// Get medicine suggestions controller
+exports.getMedicineSuggestionsController = asyncErrorHandler(async (req, res) => {
+    const { q } = req.query; // Query parameter for search term
+    
+    console.log("Suggestions controller called with query:", q);
+    
+    if (!q || q.trim().length < 2) {
+        console.log("Query too short, returning empty array");
+        return res.status(200).json({
+            success: true,
+            data: [],
+        });
+    }
+
+    console.log("Calling suggestions service with query:", q);
+    const suggestions = await MedicineServices.getMedicineSuggestions(q);
+    console.log("Suggestions service returned:", suggestions);
+    
+    res.status(200).json({
+        success: true,
+        data: suggestions,
+    });
+});

@@ -66,3 +66,20 @@ exports .getMedicineById=async(medicineId)=>{
     }
     return medicine;
 }
+
+// Get medicine suggestions
+exports.getMedicineSuggestions = async (query) => {
+    console.log("Suggestions service called with query:", query);
+    
+    const medicines = await Medicine.find({
+        name: { $regex: query, $options: "i" }
+    })
+    .select('name category')
+    .limit(10) // Limit to 10 suggestions
+    .sort({ name: 1 }); // Sort alphabetically
+    
+    console.log(`Found ${medicines.length} medicines for query "${query}"`);
+    console.log("Medicines:", medicines.map(m => ({ name: m.name, category: m.category })));
+    
+    return medicines;
+};

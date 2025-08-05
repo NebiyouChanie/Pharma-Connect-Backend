@@ -4,13 +4,19 @@ const searchServices = require('../services/searchServices');
 
 
 exports.searchMedicineController = asyncErrorHandler(async(req, res) => {
-    const { medicineName } = req.body;
+    const { medicineName, userLatitude, userLongitude } = req.body;
 
     if (!medicineName) {
         throw new customError('Please provide a medicine name to search.', 400);
-      }
+    }
 
-    const results = await searchServices.searchMedicine({ medicineName });
+    console.log("Search request received:", { medicineName, userLatitude, userLongitude });
+
+    const results = await searchServices.searchMedicine({ 
+        medicineName, 
+        userLatitude, 
+        userLongitude 
+    });
 
     res.status(200).json({
         success: true,
